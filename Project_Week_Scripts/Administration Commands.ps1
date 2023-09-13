@@ -3,6 +3,7 @@
    Locked accounts  -> Lock outs occur because of exceeded password attempt threshold per GPO configuration
    Disable accounts -> Done by an admin manually or through commands/scripts #>
 
+# Voice spitting facts 
 Add-Type -AssemblyName System.speech
 $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer
 $speak.Rate = 2
@@ -14,6 +15,8 @@ $speak.Speak("
    ")
 
 # Enumerate Expired Accounts
+# Manually expire an account:
+# Set-ADUser -Identity $Identity -AccountExpirationDate (Get-Date).AddHours(-12)
 Search-ADAccount -AccountExpired -UsersOnly
 
 # Enumerate user accounts expired within last 24-hour period
@@ -93,3 +96,17 @@ foreach ($User in $DisabledUsers) {
     }
 }
 
+# Retrieve network Adapter properties for remote computers
+Invoke-Command -ComputerName {Get-NetAdapter}
+
+
+
+# Release all DHCP leases from a specific DHCP Server
+Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=true and DHCPEnabled=true” | 
+   Where-Object -FilterScript {$_.DHCPServer -contains "$DHCPServerIP"} | 
+   ForEach-Object -Process {$_.InvokeMethod("ReleaseDHCPLease",$null)}
+
+# Renew 
+Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=true and DHCPEnabled=true” | 
+   Where-Object -FilterScript {$_.DHCPServer -contains "$DHCPServerIP"} | 
+   ForEach-Object -Process {$_.InvokeMethod("ReleaseDHCPLease",$null)}
