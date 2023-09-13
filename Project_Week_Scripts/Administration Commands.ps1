@@ -1,3 +1,5 @@
+# Add more stuff that creates objects leveraging .NET framework
+
 # Voice spitting facts 
 Add-Type -AssemblyName System.speech
 $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer
