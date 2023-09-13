@@ -3,6 +3,16 @@
    Locked accounts  -> Lock outs occur because of exceeded password attempt threshold per GPO configuration
    Disable accounts -> Done by an admin manually or through commands/scripts #>
 
+Add-Type -AssemblyName System.speech
+$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer
+$speak.Rate = 2
+$speak.Speak("
+   Fun facts about account statuses.
+   Expired accounts are determined via the Account Expiration Date attribute, you can modify it to test it.
+   Locked accounts occur when the threshold for password attempts are exceeded which depends on GPO configuration.
+   Disabled accounts occur when an admin manually disables it through the GUI, commands, or scripts.
+   ")
+
 # Enumerate Expired Accounts
 Search-ADAccount -AccountExpired -UsersOnly
 
