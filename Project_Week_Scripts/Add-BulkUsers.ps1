@@ -7,10 +7,10 @@
     #>
 
     # creates the account but can't log in
-    $FilePath = "C:\Users\Administrator.ADATUM\Desktop\users.csv"
+    $FilePath = "Your CSV File Path Here"
     $UsersFromFile = Import-Csv -Path $FilePath
     foreach ($_ in $UsersFromFile) {
-        $splat = @{
+        $Parameters = @{
         displayname = "$($_.firstname) $($_.middleinitial) $($_.lastname)"
         accountpassword = (ConvertTo-SecureString $_.password -AsPlainText -Force)
         givenname = $_.firstname
@@ -28,6 +28,6 @@
         company = $_.company
         enabled = $true
         }
-        New-ADUser -Name $_.firstname -Path $_.ou @splat
+        New-ADUser -Name $_.firstname -Path $_.ou @Parameters
     }
 #}
