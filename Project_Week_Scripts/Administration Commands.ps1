@@ -1,3 +1,8 @@
+<# Fun facts about account statuses:
+   Expired accounts -> Predetermined via “Account Expiration Date” , can modify to test below commands
+   Locked accounts  -> Lock outs occur because of exceeded password attempt threshold per GPO configuration
+   Disable accounts -> Done by an admin manually or through commands/scripts #>
+
 # Enumerate Expired Accounts
 Search-ADAccount -AccountExpired -UsersOnly
 
@@ -66,4 +71,14 @@ Get-Printer # Add -ComputerName parameter to specify a remote computer
 # Can also use -DisplayName $DisplayName instead
 Invoke-Command -ComputerName $Computer {Start-Service -Name $Name} 
 Invoke-Command -ComputerName $Computer {Stop-Service -Name $Name}
+
+# Remove Disabled Users from all Security Groups except Domain Users
+# Since most user accounts in a domain’s primary group is “Domain Users” they will not be removed from it unless it has another primary group assigned.
+$DisabledUsers = Search-ADAccount -AccountDisabled -UsersOnly
+foreach ($User in $DisabledUsers) {
+    $Groups = (Get-ADUser -Identity $User.SamAccountName -Properties MemberOf).MemberOf
+    foreach ($Group in $Groups) {
+        Remove-ADGroupMember -Identity $Group -Members $User
+    }
+}
 
