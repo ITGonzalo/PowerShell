@@ -1,3 +1,6 @@
+# Still a work in progress
+# need a live environment to test things out or build a test one from the ground up
+
 # Maybe replace subnet masks with CIDR notation
 
 $DHCPServer = ""
