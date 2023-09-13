@@ -62,3 +62,8 @@ Restart-Computer -ComputerName $Computer -Force
 # Retrieve a list of printers installed on computer
 Get-Printer # Add -ComputerName parameter to specify a remote computer
 
+# Stop and start services on remote host
+# Can also use -DisplayName $DisplayName instead
+Invoke-Command -ComputerName $Computer {Start-Service -Name $Name} 
+Invoke-Command -ComputerName $Computer {Stop-Service -Name $Name}
+
