@@ -99,14 +99,14 @@ foreach ($User in $DisabledUsers) {
 # Retrieve network Adapter properties for remote computers
 Invoke-Command -ComputerName {Get-NetAdapter}
 
-#### STILL TESTING ###
+#### STILL TESTING/NOT WORKING ###
 
-# Release all DHCP leases from a specific DHCP Server
+# Release all DHCP leases?
 Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=true and DHCPEnabled=true” | 
    Where-Object -FilterScript {$_.DHCPServer -contains "$DHCPServerIP"} | 
    ForEach-Object -Process {$_.InvokeMethod("ReleaseDHCPLease",$null)}
 
-# Renew 
+# Renew all DHCP leases?
 Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "IPEnabled=true and DHCPEnabled=true” | 
    Where-Object -FilterScript {$_.DHCPServer -contains "$DHCPServerIP"} | 
    ForEach-Object -Process {$_.InvokeMethod("ReleaseDHCPLease",$null)}
