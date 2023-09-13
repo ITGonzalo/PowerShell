@@ -1,20 +1,5 @@
 #Re-write script with use of functions (repetitive commands and stuff)
 <#  Make this a controller script that calls the following functions:
-    Add-PrintServerPrinter
-    2* Copy-ConfiguredPrinter --> Export?
-    Get-PrintServerDrivers
-    Get-PrintServerPorts
-    Get-PrintServerPrinters
-    Install-PrinterDriver
-    Uninstall-PrinterDriver?
-    Remove-PrintServerDriver
-    Remove-PrintServerPort
-    Remove-PrintServerPrinter
-    Rename-PrintServerPrinter
-    Repair-PrintServerPrinter
-    Test-PrintServerPort
-    Update-PrintServerPrinterPort
-
     Notes:
     If already done add these functionalities:
     - Validate OfficeName-Functionality-BuildingNumberRoomNumberorRoomName
@@ -115,7 +100,7 @@ do {
     }
 
     default {
-        Write-Host "That is not an option try again."
+        Write-Host "That is not an option, please try again."
     }
     }
 }
