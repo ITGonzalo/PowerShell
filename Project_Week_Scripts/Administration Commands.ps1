@@ -50,15 +50,16 @@ $ContainerPath = "container path placeholder"
 New-ADOrganizationalUnit -Name $Name -Path $ContainerPath
 
 # Create Groups
-# Specify SamAccountName if -Name parameter is over 20 characters long.
-$Name = "name placeholder"
-$GroupCategory = "group category placeholder"
-$GroupScope = "groupscope placeholder"
-$DisplayName = "displayname placeholder"
-$ContainerPath = "container path placeholder"
-$Description = "description placeholder"
-
-New-ADGroup -Name $Name -GroupCategory $GroupCategory -GroupScope $GroupScope -DisplayName $DisplayName -Path $ContainerPath -Description $Description 
+# Specify SamAccountName if Name parameter is over 20 characters long.
+$Parameters = @{
+   Name = "name placeholder"
+   GroupCategory = "group category placeholder"
+   GroupScope = "groupscope placeholder"
+   DisplayName = "displayname placeholder"
+   ContainerPath = "container path placeholder"
+   Description = "description placeholder"
+}
+New-ADGroup @Parameters
 
 # Create list of computers with particular operating system installed
 # Examples: Windows Server 2019 Datacenter Evaluation, Windows 10 Enterprise
