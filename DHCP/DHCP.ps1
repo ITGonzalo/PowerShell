@@ -3,16 +3,24 @@
 
 # Maybe replace subnet masks with CIDR notation
 
-$DHCPServer = ""
+$DHCPServer = "DHCP Server"
 
-$Scopes = Get-DHCPServerV4Scope -ComputerName "$DHCPServer" | 
-    Select-Object ScopeId, Name, State, SubnetMask 
+$AllDHCPScopes = Get-DHCPServerV4Scope -ComputerName $DHCPServer 
 
-$Leases = Get-DHCPServerV4Scope -ComputerName "$DHCPServer" | ForEach-Object {
-    Get-DHCPServerv4Lease -ComputerName "$DHCPServer" -ScopeID $_.ScopeID | 
+$Scopes = $AllDHCPScopes | Select-Object ScopeId, Name, State, SubnetMask
+
+$Leases = $AllDHCPScopes | ForEach-Object {
+    Get-DHCPServerv4Lease -ComputerName $DHCPServer -ScopeID $_.ScopeID | 
     Select-Object ScopeId, IPAddress, HostName, ClientID, AddressState
     } | Out-GridView
+
+$Reservations = $AllDHCPScopes | 
+    ForEach {
+        Get-DHCPServerv4Lease -ScopeID $_.ScopeID | 
+        Where-Object {$_.AddressState -like '*Reservation'}
+    } | Select-Object ScopeId, IPAddress, HostName, ClientID, AddressState
 
 # Try to create a non-gross way to display these nicely eventually
 $Scopes
 $Leases
+$Reservations
