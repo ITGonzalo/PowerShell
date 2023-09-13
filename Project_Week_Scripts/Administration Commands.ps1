@@ -99,6 +99,17 @@ foreach ($User in $DisabledUsers) {
 # Retrieve network Adapter properties for remote computers
 Invoke-Command -ComputerName {Get-NetAdapter}
 
+### Old CMD commands that can be done with PowerShell ###
+<# nslookup -> Resolve-DNS name
+   ping -> Test-Connection/Test-NetConnection
+   ipconfig -> 
+
+#>
+
+# Get MAC of IP
+Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "IPEnabled='True'"  | Select-Object -ExpandProperty MACAddress
+
+
 #### STILL TESTING/NOT WORKING ###
 
 # Release all DHCP leases?
