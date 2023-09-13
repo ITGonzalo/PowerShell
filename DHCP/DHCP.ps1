@@ -8,7 +8,11 @@ $DHCPServer = ""
 $Scopes = Get-DHCPServerV4Scope -ComputerName "$DHCPServer" | 
     Select-Object ScopeId, Name, State, SubnetMask 
 
-$Leases = Get-DHCPServerV4Scope -ComputerName "$DHCPServer" | ForEach {
+$Leases = Get-DHCPServerV4Scope -ComputerName "$DHCPServer" | ForEach-Object {
     Get-DHCPServerv4Lease -ComputerName "$DHCPServer" -ScopeID $_.ScopeID | 
     Select-Object ScopeId, IPAddress, HostName, ClientID, AddressState
     } | Out-GridView
+
+# Try to create a non-gross way to display these nicely eventually
+$Scopes
+$Leases
