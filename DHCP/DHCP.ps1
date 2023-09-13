@@ -15,10 +15,12 @@ $Leases = $AllDHCPScopes | ForEach-Object {
     } | Out-GridView
 
 $Reservations = $AllDHCPScopes | 
-    ForEach {
+    ForEach-Object {
         Get-DHCPServerv4Lease -ScopeID $_.ScopeID | 
-        Where-Object {$_.AddressState -like '*Reservation'}
-    } | Select-Object ScopeId, IPAddress, HostName, ClientID, AddressState
+        Where-Object {$_.AddressState -like '*Reservation'} | 
+        Select-Object ScopeId, IPAddress, HostName, @{n="MACAddress"; e={$_.ClientID}}, AddressState, LeaseExpiryTime |
+        Format-Table
+    }
 
 # Try to create a non-gross way to display these nicely eventually
 $Scopes
