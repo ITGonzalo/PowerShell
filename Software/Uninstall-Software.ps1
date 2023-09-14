@@ -15,4 +15,19 @@ $Computers = Get-Content "$PSScriptRoot\Computers.txt"
         }
     }
 
-# Uninstall-Package
+# Software uses different approaches for installation so requires research
+# If you do not have access to your network's software management system try these methods
+# Assuming you have elevated privileges and necessary permissions
+
+# Use case: Windows Package installation, find out through Get-Package
+Uninstall-Package -Name "PackageName"
+
+# Use case: If software has an uninstall string defined in the registry
+$uninstallString = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\PackageName").UninstallString
+Start-Process cmd -ArgumentList "/c $uninstallString"
+
+# Use case: When the software was installed using Windows Installer and have the GUID product code
+Start-Process -FilePath "msiexec.exe" -ArgumentList "/x {ProductCode} /quiet"
+
+# Use case: When software comes with its own uninstaller executable.
+Start-Process -FilePath "C:\Path\To\Uninstaller.exe" -ArgumentList "/silent"
