@@ -29,4 +29,4 @@ $FolderSizes = Get-ChildItem @DirectoryParams | ForEach-Object {
     }
 }
 
-$FolderSizes
+$FolderSizes | ConvertTo-HTML | Out-File "Report.html"
