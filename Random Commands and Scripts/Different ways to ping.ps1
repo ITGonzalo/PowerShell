@@ -8,4 +8,4 @@ Test-NetConnection -ComputerName $ComputerName
 
 # Using .NET Ping class
 $ping = New-Object System.Net.NetworkInformation.Ping
-$ping.Send("www.example.com")
+$ping.Send($ComputerName)
