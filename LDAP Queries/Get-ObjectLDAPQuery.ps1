@@ -1,4 +1,5 @@
 <# 
+    Requires more fine tuning, it works but still kind of messy.
     Need to generalize script to make it applicable to other environments
 #>
 
