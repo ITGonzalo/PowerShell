@@ -9,7 +9,6 @@ Write-Host "Choose an option to execute on $ServerName
 
 switch ($option = read-host) {
 
-
     1 {
         $Results = quser /server:$ServerName
         Write-Output $Results
