@@ -3,7 +3,8 @@
     This gets the sizes of folders in bytes (or MB/GB uncomment the rounding)
     Path -> Where you want to measure from
     Recurse -> Gets subdirectories too
-    Depth -> How many subdirectories you want to go into
+    Depth -> How many subdirectories you want to go into\
+    Might be useful to see who's taking up all the storage
 #>
 
 $DirectoryParams = @{
