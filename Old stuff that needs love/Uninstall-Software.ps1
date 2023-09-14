@@ -14,3 +14,5 @@ $Computers = Get-Content "$PSScriptRoot\Computers.txt"
             }
         }
     }
+
+# Uninstall-Package
